@@ -203,6 +203,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
                     
                     StatusCard(
                         systemStatus = viewModel.systemStatus,
+                        isSuperKeyMode = superKeyAuthSuccess,
                         onClickInstall = {
                             navigator.navigate(InstallScreenDestination(preselectedKernelUri = null))
                         }
@@ -413,6 +414,7 @@ private fun TopBar(
 @Composable
 private fun StatusCard(
     systemStatus: HomeViewModel.SystemStatus,
+    isSuperKeyMode: Boolean = false,
     onClickInstall: () -> Unit = {}
 ) {
     ElevatedCard(
@@ -485,6 +487,23 @@ private fun StatusCard(
                             }
 
                             Spacer(Modifier.width(6.dp))
+
+                            // SuperKey 模式标签
+                            if (isSuperKeyMode) {
+                                Surface(
+                                    shape = RoundedCornerShape(4.dp),
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    modifier = Modifier
+                                ) {
+                                    Text(
+                                        text = "SuperKey",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        color = MaterialTheme.colorScheme.onTertiary
+                                    )
+                                }
+                                Spacer(Modifier.width(6.dp))
+                            }
 
                             // 架构标签
                             if (Os.uname().machine != "aarch64") {
