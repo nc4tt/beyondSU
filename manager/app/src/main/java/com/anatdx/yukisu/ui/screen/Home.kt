@@ -456,7 +456,8 @@ private fun StatusCard(
                 .fillMaxWidth()
                 .clickable {
                     when {
-                        needsSuperKeyAuth -> onSuperKeyAuth()
+                        // 点击未安装/未认证卡片时，跳转到安装界面（而不是直接弹出超级密钥对话框）
+                        needsSuperKeyAuth -> onClickInstall()
                         systemStatus.isRootAvailable || systemStatus.kernelVersion.isGKI() -> onClickInstall()
                     }
                 }
@@ -575,26 +576,38 @@ private fun StatusCard(
                 // 需要 SuperKey 认证（未安装或未认证）
                 needsSuperKeyAuth -> {
                     Icon(
-                        imageVector = Icons.Default.Key,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.tertiary,
+                        Icons.Outlined.Warning,
+                        contentDescription = stringResource(R.string.home_not_installed),
+                        tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier
                             .size(28.dp)
                             .padding(horizontal = 4.dp),
                     )
 
-                    Column(Modifier.padding(start = 20.dp)) {
+                    Column(Modifier.padding(start = 20.dp).weight(1f)) {
                         Text(
-                            text = stringResource(R.string.home_not_installed_or_auth),
+                            text = stringResource(R.string.home_not_installed),
                             style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.tertiary
+                            color = MaterialTheme.colorScheme.error
                         )
 
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            text = stringResource(R.string.superkey_auth_subtitle),
+                            text = stringResource(R.string.home_click_to_install),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onTertiaryContainer
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    }
+                    
+                    // 超级密钥认证按钮
+                    IconButton(
+                        onClick = onSuperKeyAuth,
+                        modifier = Modifier.size(40.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Key,
+                            contentDescription = stringResource(R.string.superkey_auth_title),
+                            tint = MaterialTheme.colorScheme.tertiary
                         )
                     }
                 }
