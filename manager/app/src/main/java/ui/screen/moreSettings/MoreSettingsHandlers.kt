@@ -39,7 +39,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ui.screen.moreSettings.state.MoreSettingsState
-import ui.screen.moreSettings.util.toggleLauncherIcon
 
 /**
  * 更多设置处理器
@@ -263,16 +262,6 @@ class MoreSettingsHandlers(
             putBoolean("is_custom_dim_set", true)
             putFloat("card_dim", newValue)
         }
-    }
-
-    /**
-     * 处理图标变更
-     */
-    fun handleIconChange(newValue: Boolean) {
-        prefs.edit { putBoolean("use_alt_icon", newValue) }
-        state.useAltIcon = newValue
-        toggleLauncherIcon(context, newValue)
-        Toast.makeText(context, context.getString(R.string.icon_switched), Toast.LENGTH_SHORT).show()
     }
 
     /**

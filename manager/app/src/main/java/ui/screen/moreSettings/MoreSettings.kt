@@ -230,15 +230,6 @@ private fun CustomizationSettings(
     handlers: MoreSettingsHandlers
 ) {
     SettingsCard(title = stringResource(R.string.custom_settings)) {
-        // 图标切换
-        SwitchSettingItem(
-            icon = Icons.Default.Android,
-            title = stringResource(R.string.icon_switch_title),
-            summary = stringResource(R.string.icon_switch_summary),
-            checked = state.useAltIcon,
-            onChange = handlers::handleIconChange
-        )
-
         // 显示更多模块信息
         SwitchSettingItem(
             icon = Icons.Filled.Info,
