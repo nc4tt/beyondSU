@@ -897,8 +897,7 @@ private fun InfoCard(
                 icon = Icons.Default.SettingsSuggest,
             )
 
-            if (!isSimpleMode &&
-                (systemInfo.suSFSStatus != "Supported")) {
+            if (!isSimpleMode) {
                 InfoCardItem(
                     stringResource(R.string.home_hook_type),
                     Natives.getHookType(),
@@ -971,20 +970,6 @@ private fun InfoCard(
 @Composable
 private fun SuSFSInfoText(systemInfo: HomeViewModel.SystemInfo): String = buildString {
     append(systemInfo.suSFSVersion)
-
-    when {
-        Natives.getHookType() == "Manual" -> {
-            append(" (${stringResource(R.string.manual_hook)})")
-        }
-
-        Natives.getHookType() == "Inline" -> {
-            append(" (${stringResource(R.string.inline_hook)})")
-        }
-
-        else -> {
-            append(" (${Natives.getHookType()})")
-        }
-    }
 }
 
 fun getManagerVersion(context: Context): Pair<String, Long> {
