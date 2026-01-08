@@ -82,9 +82,9 @@ static int add_mark_on_inode(struct inode *inode, u32 mask,
 			     struct fsnotify_mark **out)
 {
 	struct fsnotify_mark *m;
-#ifdef CONFIG_KSU_LKM
+#ifndef CONFIG_KSU_LKM
 	int ret;
-#endif // #ifdef CONFIG_KSU_LKM
+#endif // #ifndef CONFIG_KSU_LKM
 
 	m = kzalloc(sizeof(*m), GFP_KERNEL);
 	if (!m)
